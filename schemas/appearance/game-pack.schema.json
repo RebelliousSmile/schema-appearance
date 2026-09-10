@@ -1,0 +1,316 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "The game's stable identifier, used as a CSS class suffix and a stored settings key.",
+      "examples": [
+        "city-of-mist",
+        "adrenaline",
+        "example-game"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The display name shown by a reader.",
+      "examples": [
+        "City of Mist",
+        "Adrenaline System"
+      ]
+    },
+    "style": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "description": "Tokens applied for every active theme.",
+          "type": "object",
+          "properties": {
+            "note": {
+              "description": "Tokens that dress the rendered document.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^--[A-Za-z0-9_-]+$",
+                "description": "A CSS custom property name copied verbatim into a renderer-owned declaration block.",
+                "examples": [
+                  "--background-primary",
+                  "--h1-font"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "workspace": {
+              "description": "Tokens that repaint the surrounding interface.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^--[A-Za-z0-9_-]+$",
+                "description": "A CSS custom property name copied verbatim into a renderer-owned declaration block.",
+                "examples": [
+                  "--background-primary",
+                  "--h1-font"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "light": {
+          "description": "Tokens applied over base for the light polarity.",
+          "type": "object",
+          "properties": {
+            "note": {
+              "description": "Tokens that dress the rendered document.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^--[A-Za-z0-9_-]+$",
+                "description": "A CSS custom property name copied verbatim into a renderer-owned declaration block.",
+                "examples": [
+                  "--background-primary",
+                  "--h1-font"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "workspace": {
+              "description": "Tokens that repaint the surrounding interface.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^--[A-Za-z0-9_-]+$",
+                "description": "A CSS custom property name copied verbatim into a renderer-owned declaration block.",
+                "examples": [
+                  "--background-primary",
+                  "--h1-font"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "dark": {
+          "description": "Tokens applied over base for the dark polarity.",
+          "type": "object",
+          "properties": {
+            "note": {
+              "description": "Tokens that dress the rendered document.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^--[A-Za-z0-9_-]+$",
+                "description": "A CSS custom property name copied verbatim into a renderer-owned declaration block.",
+                "examples": [
+                  "--background-primary",
+                  "--h1-font"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "workspace": {
+              "description": "Tokens that repaint the surrounding interface.",
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^--[A-Za-z0-9_-]+$",
+                "description": "A CSS custom property name copied verbatim into a renderer-owned declaration block.",
+                "examples": [
+                  "--background-primary",
+                  "--h1-font"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "The tokens supplied by the game, by theme variant."
+    },
+    "polarities": {
+      "uniqueItems": true,
+      "description": "The light and dark polarities explicitly supplied by the pack.",
+      "examples": [
+        [
+          "light"
+        ],
+        [
+          "light",
+          "dark"
+        ]
+      ],
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "light",
+          "dark"
+        ],
+        "description": "A light or dark presentation polarity explicitly supplied by the game pack.",
+        "examples": [
+          "light",
+          "dark"
+        ]
+      }
+    },
+    "assets": {
+      "description": "The illustrations and typefaces supplied by the pack.",
+      "type": "object",
+      "properties": {
+        "root": {
+          "description": "The asset folder relative to the reader's own asset root.",
+          "examples": [
+            "city-of-mist",
+            "assets/example-game"
+          ],
+          "type": "string"
+        },
+        "images": {
+          "description": "Illustration roles mapped to files under the asset root.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "fonts": {
+          "description": "Font-family names mapped to their files or face metadata.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The font file relative to the pack's asset folder.",
+                    "examples": [
+                      "fonts/pragroman.ttf",
+                      "fonts/body.woff2"
+                    ]
+                  },
+                  "weight": {
+                    "description": "The CSS font weight carried by this file.",
+                    "examples": [
+                      "400",
+                      "700",
+                      "400 700"
+                    ],
+                    "type": "string"
+                  },
+                  "style": {
+                    "description": "The CSS font style carried by this file.",
+                    "examples": [
+                      "normal",
+                      "italic"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file"
+                ],
+                "additionalProperties": false,
+                "description": "One font file and its optional face metadata."
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "shapes": {
+      "description": "Per-block, per-zone presentation overrides.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "holds": {
+              "description": "Replacement wording for what the zone holds.",
+              "type": "string"
+            },
+            "heading": {
+              "description": "Replacement printed heading for the zone.",
+              "examples": [
+                "Threats and consequences"
+              ],
+              "type": "string"
+            },
+            "family": {
+              "description": "Replacement class shared by related zones.",
+              "type": "string"
+            },
+            "image": {
+              "description": "Replacement illustration role carried by the zone.",
+              "type": "string"
+            },
+            "optional": {
+              "description": "Whether an empty zone may be omitted by the renderer.",
+              "type": "boolean"
+            },
+            "hidden": {
+              "description": "Whether the renderer must leave the zone out entirely.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "description": "A partial override for a named zone already declared by a rendered block."
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "style"
+  ],
+  "additionalProperties": false,
+  "description": "A cross-game presentation pack: identity, custom-property tokens, polarities, asset roles, and named zone overrides, with no game mechanics."
+}

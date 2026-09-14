@@ -1,6 +1,6 @@
 ---
 objective: "Game appearance packs can optionally declare an ordered, safe, relative stylesheet list while existing token-only packs remain valid."
-status: in-progress
+status: implemented
 ---
 
 # Plan: Support stylesheet resources in game appearance packs

@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 const NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const SAFE_RELATIVE_ASSET_PATH_PATTERN =
+  /^(?!\/)(?!.*\/{2})(?!.*\\)(?!.*:)[A-Za-z0-9][A-Za-z0-9._-]*(?:\/[A-Za-z0-9][A-Za-z0-9._-]*)*$/;
 
 export const GamePackIdSchema = z
   .string()
@@ -86,6 +88,30 @@ export const FontFaceSchema = z
   })
   .meta({ description: "One font file and its optional face metadata." });
 
+export const StylesheetPathSchema = z
+  .string()
+  .regex(
+    SAFE_RELATIVE_ASSET_PATH_PATTERN,
+    "A stylesheet path must be a safe, normalized path relative to the pack asset root",
+  )
+  .meta({
+    description:
+      "A normalized forward-slash stylesheet path relative to the pack's asset root.",
+    examples: ["styles/game.css", "themes/dark.css"],
+  });
+
+export const StylesheetsSchema = z
+  .array(StylesheetPathSchema)
+  .refine(
+    (paths) => new Set(paths).size === paths.length,
+    "A stylesheet path may be declared only once",
+  )
+  .meta({
+    uniqueItems: true,
+    description:
+      "Ordered stylesheet resources relative to the pack's asset root.",
+  });
+
 export const AssetsSchema = z
   .object({
     root: z.string().trim().optional().meta({
@@ -107,9 +133,11 @@ export const AssetsSchema = z
       .meta({
         description: "Font-family names mapped to their files or face metadata.",
       }),
+    stylesheets: StylesheetsSchema.optional(),
   })
   .meta({
-    description: "The image and font resources named by the presentation pack.",
+    description:
+      "The image, font, and stylesheet resources named by the presentation pack.",
   });
 
 export const ZoneOverrideSchema = z
@@ -168,7 +196,8 @@ export const GamePackSchema = z
       examples: [["light"], ["light", "dark"]],
     }),
     assets: AssetsSchema.optional().meta({
-      description: "The illustrations and typefaces supplied by the pack.",
+      description:
+        "The illustrations, typefaces, and stylesheet resources supplied by the pack.",
     }),
     shapes: ShapeOverridesSchema.optional().meta({
       description: "Per-block, per-zone presentation overrides.",
@@ -185,6 +214,7 @@ export type GamePackTokens = z.infer<typeof TokensSchema>;
 export type GamePackStyleLayer = z.infer<typeof StyleLayerSchema>;
 export type GamePackStyle = z.infer<typeof StyleSchema>;
 export type GamePackFontFace = z.infer<typeof FontFaceSchema>;
+export type GamePackStylesheetPath = z.infer<typeof StylesheetPathSchema>;
 export type GamePackAssets = z.infer<typeof AssetsSchema>;
 export type ZoneOverride = z.infer<typeof ZoneOverrideSchema>;
 export type ShapeOverrides = z.infer<typeof ShapeOverridesSchema>;

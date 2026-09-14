@@ -34,7 +34,8 @@
     "fonts": {
       "Oswald": "oswald-regular.woff2",
       "Oswald Bold": { "file": "oswald-bold.woff2", "weight": "700" }
-    }
+    },
+    "stylesheets": ["styles/city-of-mist.css", "styles/shapes.css"]
   },
   "shapes": {
     "com-danger": {

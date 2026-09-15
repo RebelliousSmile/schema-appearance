@@ -1,36 +1,24 @@
-# Schema Appearance
+# Schema Appearance (archived)
 
-Open, versioned schemas for cross-game presentation packs. A `game-pack`
-describes how a game dresses a reader: CSS custom-property values, supported
-light/dark polarities, asset roles, fonts, and per-block zone overrides.
+> **Archived on 2026-09-15.** The active `GamePack` appearance contract now
+> belongs to [Handbook v2.15.0](https://github.com/RebelliousSmile/obsidian-handbook/tree/v2.15.0).
+> New producers and consumers must use its
+> [`schemas/appearance/game-pack.schema.json`](https://github.com/RebelliousSmile/obsidian-handbook/blob/v2.15.0/schemas/appearance/game-pack.schema.json).
 
-It contains no game mechanics. In particular, it is unrelated to
-`schema-pbta`'s `game-definition`, which describes how a game is played.
+This repository is retained as a compatibility record only. Its former raw URL
+remains readable as a **frozen historical snapshot**; it does not redirect and
+must not be treated as a live source of the contract:
 
-## Canonical schema
+<https://raw.githubusercontent.com/RebelliousSmile/schema-appearance/main/schemas/appearance/game-pack.schema.json>
 
-- Zod source: `src/zod/appearance/game-pack.ts`
-- JSON Schema Draft 7: `schemas/appearance/game-pack.schema.json`
-- Raw URL: <https://raw.githubusercontent.com/RebelliousSmile/schema-appearance/main/schemas/appearance/game-pack.schema.json>
-
-The initial contract reconciles two earlier implementations from
-`RebelliousSmile/schema-in-the-mist`: main commit `9535e94` and issue-backed
-commit `00669b8`. It preserves the current pack structure while including the
-`polarities` and `shapes` fields already consumed by Handbook.
-
-## Development
-
-```sh
-npm ci
-npm run check
-```
-
-The check typechecks the Zod source, regenerates the JSON Schema, and validates
-every example with Ajv. Generated output must be committed.
+The five historical examples and their validation now live in Handbook under
+[`corpus/game-packs/appearance-fixtures/`](https://github.com/RebelliousSmile/obsidian-handbook/tree/v2.15.0/corpus/game-packs/appearance-fixtures).
+The Zod generator is deliberately retired rather than copied: Handbook's JSON
+Schema is the single canonical source.
 
 ## Fixture provenance and trademarks
 
-The Adrenaline fixture is extracted from
+The historical Adrenaline fixture is extracted from
 [`RebelliousSmile/schema-adrenaline`](https://github.com/RebelliousSmile/schema-adrenaline).
 The City of Mist, :Otherscape, and Legend in the Mist fixtures originate from
 [`RebelliousSmile/schema-in-the-mist`](https://github.com/RebelliousSmile/schema-in-the-mist).

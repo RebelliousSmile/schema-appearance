@@ -5,6 +5,15 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2026-09-15
+
+### Deprecated
+
+- Archive this repository as a frozen compatibility record. The active GamePack
+  contract, its fixtures, and its validation now belong to Handbook v2.15.0.
+- Keep the former raw URL available as a historical snapshot; it is not a
+  redirect and no longer receives contract updates.
+
 ## [0.2.0] - 2026-09-14
 
 ### Added
